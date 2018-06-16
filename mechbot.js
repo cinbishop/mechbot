@@ -40,6 +40,9 @@ bot.on('message', msg => {
 						//console.log(JSON.parse(data));
 						data = JSON.parse(data);
 						for (var key in data) {
+							if(key == "Rank" && data[key] == "0") {
+								data[key] == "RETIRED";
+							}
 							message += '**'+key+':** ' + data[key] + '\n'; 
 						}
 						msg.channel.send(message);
