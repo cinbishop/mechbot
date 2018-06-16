@@ -17,11 +17,17 @@ bot.on('message', msg => {
 		if(!hasPrefix) {
 			return;
 		} else {
-			var cmd = msg.content.match(/^!(jarl)\s(\S+)/);
+			var cmd = msg.content.match(/^!(jarl)\s(\S+)(\ss\d{1,3})?/);
 			console.log(cmd);
 			if(cmd) {
 				var username = cmd[2];
-				https.get("https://leaderboard.isengrim.org/api/usernames/"+username, (resp) => {
+				var season = cmd[3] ? cmd[3].split('s')[1] : null;
+				var requestURLBase = "https://leaderboard.isengrim.org/api/usernames/"+username;
+				if(season != null) {
+					requestURLBase += '/seasons/'+season;
+				}
+				/*! LOOKUP FULL USER STATS **/
+				https.get(requestURLBase, (resp) => {
 					let data = '';
 
 					resp.on('data',(chunk) => {
