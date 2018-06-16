@@ -6,7 +6,7 @@ const bot = new Discord.Client();
 
 bot.on('ready', () => {
 	console.log('All systems nominal.');
-	bot.user.setStatus("online","!jarl [name] for epeen measurement!");
+	bot.user.setActivity('!jarl [name] for epeen measurement', { type: 'PLAYING' });
 });
 
 bot.on('message', msg => {
