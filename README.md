@@ -1,1 +1,1 @@
-# mechbot
+A discord.js bot to interface with the Jarls List api
