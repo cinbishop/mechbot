@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const https = require("https");
 const authKey = require("./auth.json");
 
 const bot = new Discord.Client();
@@ -19,17 +20,26 @@ bot.on('message', msg => {
 			var cmd = msg.content.match(/^!(jarl)\s(\S+)/);
 			console.log(cmd);
 			if(cmd) {
-				var oReq = new XMLHttpRequest();
+				var username = cmd[2];
+				https.get("https://leaderboard.isengrim.org/api/usernames/"+username, (resp) => {
+					let data = '';
 
-				function reqListener() {
-					console.log(this.responseText);
-				}
+					resp.on('data',(chunk) => {
+						data += chunk;
+					});
 
-				oReq.addEventListener('load',reqListner);
-				oReq.open("GET",'https://leadeboard.isengrim.org/api/usernames/'+username);
-				oReq.send();
-
-				//msg.channel.send('yup');
+					resp.on('end', () => {
+						var message = "";
+						//console.log(JSON.parse(data));
+						data = JSON.parse(data);
+						for (var key in data) {
+							message += '**'+key+':** ' + data[key] + '\n'; 
+						}
+						msg.channel.send(message);
+					});
+				}).on("error",(err) => {
+					console.log("Error: " + err.message);
+				});
 			}
 		}
 	}
