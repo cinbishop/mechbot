@@ -19,7 +19,6 @@ bot.on('message', msg => {
 		} else {
 			var cmd = msg.content.match(/^!(jarl)\s(\S+)(\ss\d{1,3})?/);
 			console.log(cmd);
-			console.log('test');
 			if(cmd) {
 				var username = cmd[2];
 				var season = cmd[3] ? cmd[3].split('s')[1] : null;
@@ -41,7 +40,7 @@ bot.on('message', msg => {
 						data = JSON.parse(data);
 						for (var key in data) {
 							if(key === "Rank" && data[key] === 0) {
-								data[key] == "RETIRED";
+								data[key] = "RETIRED";
 							}
 							message += '**'+key+':** ' + data[key] + '\n'; 
 						}
