@@ -18,7 +18,7 @@ bot.on('message', msg => {
 		if(!hasPrefix) {
 			return;
 		} else {
-			var cmd = msg.content.match(/^!(jarl)\s([\w\s]+)\s(\s?-s\d{1,3})?/);
+			var cmd = msg.content.match(/^!(jarl)\s([\w\s]+)(\s?-s\d{1,3})?/);
 			console.log(cmd);
 			if(cmd) {
 				var username = cmd[2].replace(/\s+$/,'').replace(' ','+');
