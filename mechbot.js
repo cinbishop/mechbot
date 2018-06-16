@@ -17,11 +17,11 @@ bot.on('message', msg => {
 		if(!hasPrefix) {
 			return;
 		} else {
-			var cmd = msg.content.match(/^!(jarl)\s(\S+)(\ss\d{1,3})?/);
+			var cmd = msg.content.match(/^!(jarl)\s([\w\s]+)(\s?-s\d{1,3})?/);
 			console.log(cmd);
 			if(cmd) {
-				var username = cmd[2];
-				var season = cmd[3] ? cmd[3].split('s')[1] : null;
+				var username = cmd[2].replace(/\s+$/,'').replace(' ','+');
+				var season = cmd[3] ? cmd[3].replace('-','').split('s')[1] : null;
 				var requestURLBase = "https://leaderboard.isengrim.org/api/usernames/"+username;
 				if(season != null) {
 					requestURLBase += '/seasons/'+season;
