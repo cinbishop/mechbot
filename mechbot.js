@@ -5,7 +5,7 @@ const authKey = require("./auth.json");
 const bot = new Discord.Client();
 
 bot.on("ready", () => {
-	bo.setStatus("online","!jarl [username] for epeen measuring!");
+	bot.setStatus("online","!jarl [username] for epeen measuring!");
 	console.log("All systems nominal.");
 });
 
