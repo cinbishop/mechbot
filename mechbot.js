@@ -6,6 +6,7 @@ const bot = new Discord.Client();
 
 bot.on('ready', () => {
 	console.log('All systems nominal.');
+	bot.user.setStatus("online","!jarl [name] for epeen measurement!");
 });
 
 bot.on('message', msg => {
@@ -20,7 +21,7 @@ bot.on('message', msg => {
 			var cmd = msg.content.match(/^!(jarl)\s([\w\s]+)\s(\s?-s\d{1,3})?/);
 			console.log(cmd);
 			if(cmd) {
-				var username = cmd[2].replace(' ','+');
+				var username = cmd[2].replace(/\s+$/,'').replace(' ','+');
 				var season = cmd[3] ? cmd[3].replace('-','').split('s')[1] : null;
 				var requestURLBase = "https://leaderboard.isengrim.org/api/usernames/"+username;
 				if(season != null) {
