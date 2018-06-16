@@ -4,12 +4,11 @@ const authKey = require("./auth.json");
 
 const bot = new Discord.Client();
 
-bot.on("ready", () => {
-	bot.user.setStatus("online","!jarl [username] for epeen measuring!");
-	console.log("All systems nominal.");
+bot.on('ready', () => {
+	console.log('All systems nominal.');
 });
 
-bot.on("message", msg => {
+bot.on('message', msg => {
 	if(msg.author.bot) {
 		return;
 	} else {
@@ -21,21 +20,21 @@ bot.on("message", msg => {
 			var cmd = msg.content.match(/^!(jarl)\s([\w\s]+)\s(\s?-s\d{1,3})?/);
 			console.log(cmd);
 			if(cmd) {
-				var username = cmd[2].replace(" ","+");
-				var season = cmd[3] ? cmd[3].replace("-","").split("s")[1] : null;
+				var username = cmd[2].replace(' ','+');
+				var season = cmd[3] ? cmd[3].replace('-','').split('s')[1] : null;
 				var requestURLBase = "https://leaderboard.isengrim.org/api/usernames/"+username;
 				if(season != null) {
-					requestURLBase += "/seasons/"+season;
+					requestURLBase += '/seasons/'+season;
 				}
-				/*! LOOKUP FULL USER STATS (TOTAL OR SPECIFIC SEASON) **/
+				/*! LOOKUP FULL USER STATS **/
 				https.get(requestURLBase, (resp) => {
-					let data = "";
+					let data = '';
 
-					resp.on("data",(chunk) => {
+					resp.on('data',(chunk) => {
 						data += chunk;
 					});
 
-					resp.on("end", () => {
+					resp.on('end', () => {
 						var message = "";
 						//console.log(JSON.parse(data));
 						data = JSON.parse(data);
@@ -43,7 +42,7 @@ bot.on("message", msg => {
 							if(key === "Rank" && data[key] === 0) {
 								data[key] = "RETIRED";
 							}
-							message += "**"+key+":** " + data[key] + "\n"; 
+							message += '**'+key+':** ' + data[key] + '\n'; 
 						}
 						msg.channel.send(message);
 					});
