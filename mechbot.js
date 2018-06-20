@@ -1,6 +1,9 @@
 const Discord = require("discord.js");
 const https = require("https");
 const config = require("./auth.json");
+const fs = require("fs");
+
+var mechIDs = {};
 
 const bot = new Discord.Client();
 
@@ -65,22 +68,34 @@ bot.on("message", msg => {
 				console.log(data[1]['name']);
 				//console.log(Object.keys(data['name']));
 
-				function findArr(arr, value) {
-					for (var i = 1, len = Object.keys(arr).length; i<len; i++) {
-						console.log(arr[i]);
-						if (arr[i]['name'] == value) return arr[i];
-					};
-					return false;
-				}
-
-				let selectedMech = findArr(data, requestedMech);
-				let hardpoints = '';
-				if(selectedMech) {
-					for (var key in selectedMech['details']['hardpoints']) {
-						hardpoints += '**'+key+'** ' + selectedMech['details']['hardpoints'][key] + '\n';
+				for (var i = 1, len = 711; i<len; i++) {
+					if(data[i]) {
+						mechIDs[i] = data[i]['name'];
 					}
-					msg.channel.send(hardpoints);
-				}
+				};
+
+				fs.writeFile('test.txt',JSON.stringify(mechIDs), function(err){
+					if(err) {
+						console.log(err);
+					}
+				});
+
+				// function findArr(arr, value) {
+				// 	for (var i = 1, len = Object.keys(arr).length; i<len; i++) {
+				// 		console.log(arr[i]);
+				// 		if (arr[i]['name'] == value) return arr[i];
+				// 	};
+				// 	return false;
+				// }
+
+				// let selectedMech = findArr(data, requestedMech);
+				// let hardpoints = '';
+				// if(selectedMech) {
+				// 	for (var key in selectedMech['details']['hardpoints']) {
+				// 		hardpoints += '**'+key+'** ' + selectedMech['details']['hardpoints'][key] + '\n';
+				// 	}
+				// 	msg.channel.send(hardpoints);
+				// }
 			}).on("error",(err) => {
 				console.log('Error: ' + err.message);
 			});
