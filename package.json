@@ -5,7 +5,9 @@
   "main": "mechbot.js",
   "dependencies": {
     "discord.js": "^11.3.2",
-    "express": "^4.16.3"
+    "enmap": "^2.6.3",
+    "express": "^4.16.3",
+    "fetch": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
