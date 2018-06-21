@@ -13,7 +13,7 @@ client.mechdata = new Enmap();
 
 client.on("ready", () => {
 	console.log('All systems nominal.');
-	bot.user.setActivity('!jarl [name] for epeen measurement', { type: 'PLAYING' });
+	client.user.setActivity('!jarl [name] for epeen measurement', { type: 'PLAYING' });
 });
 
 fs.readdir("./events/", (err, files) => {
