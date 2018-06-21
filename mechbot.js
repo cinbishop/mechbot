@@ -11,7 +11,7 @@ client.https = https;
 
 client.mechdata = new Enmap();
 
-bot.on("ready", () => {
+client.on("ready", () => {
 	console.log('All systems nominal.');
 	bot.user.setActivity('!jarl [name] for epeen measurement', { type: 'PLAYING' });
 });
