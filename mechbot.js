@@ -11,8 +11,6 @@ client.https = https;
 
 client.mechdata = new Enmap();
 
-console.log('works');
-
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
