@@ -11,6 +11,11 @@ client.https = https;
 
 client.mechdata = new Enmap();
 
+bot.on("ready", () => {
+	console.log('All systems nominal.');
+	bot.user.setActivity('!jarl [name] for epeen measurement', { type: 'PLAYING' });
+});
+
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
