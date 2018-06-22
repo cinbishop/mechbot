@@ -4,7 +4,6 @@ exports.run = (client, message, args) => {
 	let botresponse = '';
 
 	if(!client.mechdata.has('hbk-4g')) {
-		console.log('no mech data');
 		let requestUrl = 'https://mwo.smurfy-net.de/api/data/mechs.json';
 
 		client.https.get(requestUrl, (resp) => {
@@ -22,22 +21,73 @@ exports.run = (client, message, args) => {
 					client.mechdata.set(data[mech]['name'],data[mech]);
 				});
 				const requestedMechData = client.mechdata.get(requestedMech);
-				for (var key in requestedMechData['details']['hardpoints']) {
-					botresponse += '**'+key+'** ' + requestedMechData['details']['hardpoints'][key] + '\n';
+
+				if(requestedMechData == null) {
+					message.channel.send('That ain\'t no mech I ever heard of!');
+					return;
+				} else {
+					botresponse += '**'+requestedMechData['chassis_translated']+'**-'+requestedMechData['translated_name'] + '\n';
+
+					if(requestedMechData['details']['hardpoints']['ballistic'] > 0) {
+						botresponse += 'Good news! This mech is most likely RACable!\n\n';
+					} else {
+						botresponse += 'WARNING: This mech is not RACable!\n\n';
+					}
+
+					botresponse += '**HARDPOINTS**' + '\n';
+					botresponse += '----------' + '\n';
+
+					for (var key in requestedMechData['details']['hardpoints']) {
+						if(requestedMechData['details']['hardpoints'][key] > 0) {
+							botresponse += key.toUpperCase()+': ' + requestedMechData['details']['hardpoints'][key] + '\n';
+						}
+					}
+
+					botresponse += '\n**QUIRKS**' + '\n';
+					botresponse += '----------' + '\n';
+
+					for (var i = 0, len = requestedMechData['details']['quirks'].length; i < len; i++) {
+						botresponse += '**'+requestedMechData['details']['quirks'][i]['translated_name'].toUpperCase()+':** '+requestedMechData['details']['quirks'][i]['value'] + '\n';
+					}
+					message.channel.send(botresponse);
 				}
-				message.channel.send(botresponse);
 
 			}).on("error",(err) => {
 				console.log('Error: ' + err.message);
 			});
 		});
-
 	} else {
 		const requestedMechData = client.mechdata.get(requestedMech);
-		for (var key in requestedMechData['details']['hardpoints']) {
-			botresponse += '**'+key+'** ' + requestedMechData['details']['hardpoints'][key] + '\n';
+
+		if(requestedMechData == null) {
+			message.channel.send('That ain\'t no mech I ever heard of!');
+			return;
+		} else {
+			botresponse += '**'+requestedMechData['chassis_translated']+'**-'+requestedMechData['translated_name'] + '\n';
+
+			if(requestedMechData['details']['hardpoints']['ballistic'] > 0) {
+				botresponse += 'Good news! This mech is most likely RACable!\n\n';
+			} else {
+				botresponse += 'WARNING: This mech is not RACable!\n\n';
+			}
+
+			botresponse += '**HARDPOINTS**' + '\n';
+			botresponse += '----------' + '\n';
+
+			for (var key in requestedMechData['details']['hardpoints']) {
+				if(requestedMechData['details']['hardpoints'][key] > 0) {
+					botresponse += key.toUpperCase()+': ' + requestedMechData['details']['hardpoints'][key] + '\n';
+				}
+			}
+
+			botresponse += '\n**QUIRKS**' + '\n';
+			botresponse += '----------' + '\n';
+
+			for (var i = 0, len = requestedMechData['details']['quirks'].length; i < len; i++) {
+				botresponse += '**'+requestedMechData['details']['quirks'][i]['translated_name'].toUpperCase()+':** '+requestedMechData['details']['quirks'][i]['value'] + '\n';
+			}
+			message.channel.send(botresponse);
 		}
-		message.channel.send(botresponse);
 	}
 
 }
