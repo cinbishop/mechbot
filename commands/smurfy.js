@@ -28,7 +28,7 @@ exports.run = (client, message, args) => {
 			botresponse += '**'+requestedMechData['details']['quirks'][i]['translated_name'].toUpperCase()+':** '+requestedMechData['details']['quirks'][i]['value'] + '\n';
 		}
 
-		return botreponse;
+		return botresponse;
 	}
 
 	if(!client.mechdata.has('hbk-4g')) {
