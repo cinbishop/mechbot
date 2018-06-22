@@ -21,11 +21,13 @@ exports.run = (client, message, args) => {
 			}
 		}
 
-		botresponse += '\n**QUIRKS**' + '\n';
-		botresponse += '----------' + '\n';
+		if(requestedMechData['details']['quirks'].length > 0) {
+			botresponse += '\n**QUIRKS**' + '\n';
+			botresponse += '----------' + '\n';
 
-		for (var i = 0, len = requestedMechData['details']['quirks'].length; i < len; i++) {
-			botresponse += '**'+requestedMechData['details']['quirks'][i]['translated_name'].toUpperCase()+':** '+requestedMechData['details']['quirks'][i]['value'] + '\n';
+			for (var i = 0, len = requestedMechData['details']['quirks'].length; i < len; i++) {
+				botresponse += '**'+requestedMechData['details']['quirks'][i]['translated_name'].toUpperCase()+':** '+requestedMechData['details']['quirks'][i]['value'] + '\n';
+			}
 		}
 
 		return botresponse;
