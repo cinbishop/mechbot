@@ -28,7 +28,7 @@ exports.run = (client, message, args) => {
 				} else {
 					botresponse += '**'+requestedMechData['chassis_translated']+'**-'+requestedMechData['translated_name'] + '\n';
 
-					if(requestedMechData['details']['hardpoints']['ballistic'] > 0) {
+					if(requestedMechData['details']['hardpoints']['ballistic'] > 0 && requestedMechData['faction'] == 'InnerSphere') {
 						botresponse += 'Good news! This mech is most likely RACable!\n\n';
 					} else {
 						botresponse += 'WARNING: This mech is not RACable!\n\n';
@@ -65,7 +65,7 @@ exports.run = (client, message, args) => {
 		} else {
 			botresponse += '**'+requestedMechData['chassis_translated']+'**-'+requestedMechData['translated_name'] + '\n';
 
-			if(requestedMechData['details']['hardpoints']['ballistic'] > 0) {
+			if(requestedMechData['details']['hardpoints']['ballistic'] > 0 && requestedMechData['faction'] == 'InnerSphere') {
 				botresponse += 'Good news! This mech is most likely RACable!\n\n';
 			} else {
 				botresponse += 'WARNING: This mech is not RACable!\n\n';
