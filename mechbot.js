@@ -14,8 +14,10 @@ client.mechdata = new Enmap();
 client.on("ready", () => {
 	console.log('All systems nominal.');
 	client.user.setActivity('!jarl [name] for epeen measurement', { type: 'PLAYING' });
+	getMechData();
 });
 
+/*! GET EVENTS **/
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
@@ -25,6 +27,7 @@ fs.readdir("./events/", (err, files) => {
   });
 });
 
+/*! GET COMMANDS **/
 client.commands = new Enmap();
 
 fs.readdir("./commands/", (err, files) => {
@@ -37,5 +40,32 @@ fs.readdir("./commands/", (err, files) => {
     client.commands.set(commandName, props);
   });
 });
+
+/*! GET SMURFY MECH DATA **/
+function getMechData() {
+	let requestUrl = 'https://mwo.smurfy-net.de/api/data/mechs.json';
+
+	client.https.get(requestUrl, (resp) => {
+		let data = '';
+
+		resp.on("data",(chunk) => {
+			data += chunk;
+		});
+
+		resp.on("end",() => {
+
+			data = JSON.parse(data);
+
+			Object.keys(data).forEach(function(mech,i) {
+				client.mechdata.set(data[mech]['name'],data[mech]);
+			});
+
+			console.log('Mech data loaded.')
+
+		}).on("error",(err) => {
+			console.log('Error: ' + err.message);
+		});
+	});
+}
 
 client.login(config.token);
