@@ -13,6 +13,6 @@ exports.run = (client, message, args) => {
 	botresponse += '*example: !lookup urbanmech\n\n';
 
 	message.channel.send('DM Sent!');
-	message.author.sendMessage();
+	message.author.sendMessage(botresponse);
 
 }
