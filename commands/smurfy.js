@@ -22,8 +22,9 @@ exports.run = (client, message, args) => {
 		}
 
 		if(detailsArr.length > 0) {
-			console.log(detailsArr);
 			botresponse += detailsArr.join(' | ') + '\n\n';
+		} else {
+			botresponse += '\n';
 		}
 
 		botresponse += '**HARDPOINTS**' + '\n';
