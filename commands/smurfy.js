@@ -4,12 +4,30 @@ exports.run = (client, message, args) => {
 
 	function formatMechData(requestedMechData) {
 		let botresponse = '';
+		let detailsArr = [];
 		botresponse += '**'+requestedMechData['chassis_translated']+'**-'+requestedMechData['translated_name'] + '\n';
 
 		if(requestedMechData['details']['hardpoints']['ballistic'] > 0 && requestedMechData['faction'] == 'InnerSphere') {
-			botresponse += 'Good news! This mech is most likely RACable!\n\n';
+			botresponse += '*Good news! This mech is most likely RACable!*\n';
 		} else {
-			botresponse += 'WARNING: This mech is not RACable!\n\n';
+			botresponse += '*WARNING: This mech is not RACable!*\n';
+		}
+
+		if(requestedMechData['details']['jump_jets'] > 0) {
+			detailsArr.push('JJ: '+requestedMechData['details']['jump_jets']);
+		}
+
+		if(requestedMechData['details']['ecm']) {
+			detailsArr.push('ECM');
+		}
+
+		if(requestedMechData['details']['masc']) {
+			detailsArr.push('MASC');
+		}
+
+		if(detailsArr.length > 0) {
+			console.log(detailsArr);
+			botresponse += detailsArr.join(' | ') + '\n\n';
 		}
 
 		botresponse += '**HARDPOINTS**' + '\n';
