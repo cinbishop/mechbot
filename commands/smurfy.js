@@ -21,10 +21,6 @@ exports.run = (client, message, args) => {
 			detailsArr.push('ECM');
 		}
 
-		if(requestedMechData['details']['masc']) {
-			detailsArr.push('MASC');
-		}
-
 		if(detailsArr.length > 0) {
 			console.log(detailsArr);
 			botresponse += detailsArr.join(' | ') + '\n\n';
