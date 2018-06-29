@@ -11,10 +11,12 @@ client.https = https;
 
 client.mechdata = new Enmap();
 
+const functions = require("./functions.js")(client);
+
 client.on("ready", () => {
 	console.log('All systems nominal.');
 	client.user.setActivity('!help for a list of commands', { type: 'PLAYING' });
-	getMechData();
+	client.functions.getMechData();
 });
 
 /*! GET EVENTS **/
@@ -41,31 +43,6 @@ fs.readdir("./commands/", (err, files) => {
   });
 });
 
-/*! GET SMURFY MECH DATA **/
-function getMechData() {
-	let requestUrl = 'https://mwo.smurfy-net.de/api/data/mechs.json';
-
-	client.https.get(requestUrl, (resp) => {
-		let data = '';
-
-		resp.on("data",(chunk) => {
-			data += chunk;
-		});
-
-		resp.on("end",() => {
-
-			data = JSON.parse(data);
-
-			Object.keys(data).forEach(function(mech,i) {
-				client.mechdata.set(data[mech]['name'],data[mech]);
-			});
-
-			console.log('Mech data loaded.')
-
-		}).on("error",(err) => {
-			console.log('Error: ' + err.message);
-		});
-	});
-}
+client.functions = functions;
 
 client.login(config.token);

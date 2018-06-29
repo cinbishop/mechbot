@@ -8,24 +8,32 @@ exports.run = (client, message, args) => {
 
 	client.https.get(requestUrl, (resp) => {
 		let data = '';
+		console.log('GET FIRED');
 
 		resp.on("data",(chunk) => {
 			data += chunk;
 		});
 
 		resp.on("end",() => {
-			let stats = '';
-			data = JSON.parse(data);
-			//console.log(data);
-			for (var key in data) {
-				if(key === 'Rank' && data[key] === 0) {
-					data[key] = 'Retired';
+			try {
+				let stats = '';
+				data = JSON.parse(data);
+				//console.log(data);
+				for (var key in data) {
+					if(key === 'Rank' && data[key] === 0) {
+						data[key] = 'Retired';
+					}
+					stats += '**'+key+'** ' + data[key] + '\n';
 				}
-				stats += '**'+key+'** ' + data[key] + '\n';
+				message.channel.send(stats);
+			} catch (e) {
+				message.channel.send('Jarl\'s List API Is Down!');
+				return false;
 			}
-			message.channel.send(stats);
+			return true;
 		});
 	}).on("error",(err) => {
+		console.log('UH OH');
 		console.log('Error: ' + err.message);
 	});
 }

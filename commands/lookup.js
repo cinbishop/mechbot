@@ -1,18 +1,6 @@
 exports.run = (client, message, args) => {
 
 	let requestedMech = args.join(' ').toUpperCase();
-	console.log(requestedMech);
-
-	function formatMechData(requestedMechData) {
-		let botresponse = '';
-		botresponse += '**'+requestedMech+' chassis variants:**\n';
-
-		requestedMechData.forEach(function(mech){
-			botresponse += mech['translated_short_name']+'\n';
-		});
-
-		return botresponse
-	}
 
 	const requestedMechData = client.mechdata.findAll('chassis_translated',requestedMech);
 
@@ -21,7 +9,7 @@ exports.run = (client, message, args) => {
 		return;
 	} else {
 		console.log(requestedMechData);
-		let botresponse = formatMechData(requestedMechData);
+		let botresponse = client.functions.getVariants(requestedMech, requestedMechData);
 		message.channel.send(botresponse);
 	}
 
