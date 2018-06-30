@@ -78,9 +78,11 @@ module.exports = function (client) {
 		let botresponse = '';
 		botresponse += '**'+requestedMech+' VARIANTS:**\n';
 
-		requestedMechData.forEach(function(mech){
-			botresponse += mech['translated_short_name']+'\n';
+		requestedMechData.forEach(function(mech, i){
+			botresponse += i+1+': '+mech['translated_short_name']+'\n';
 		});
+
+		botresponse += '\nType 1-'+requestedMechData.length+' to select a variant!'
 
 		return botresponse
 	};

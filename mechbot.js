@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const Enmap = require("enmap");
+const Provider = require("enmap-sqlite");
 const https = require("https");
 const fs = require("fs");
 
@@ -9,7 +10,7 @@ const config = require("./auth.json");
 client.config = config;
 client.https = https;
 
-client.mechdata = new Enmap();
+client.mechdata = new Enmap({provider: new Provider({name: "mechdata"})});
 
 const functions = require("./functions.js")(client);
 
@@ -45,4 +46,4 @@ fs.readdir("./commands/", (err, files) => {
 
 client.functions = functions;
 
-client.login(config.token);
+client.login(config.tokendev);

@@ -8,7 +8,6 @@ exports.run = (client, message, args) => {
 
 	client.https.get(requestUrl, (resp) => {
 		let data = '';
-		console.log('GET FIRED');
 
 		resp.on("data",(chunk) => {
 			data += chunk;
@@ -33,7 +32,6 @@ exports.run = (client, message, args) => {
 			return true;
 		});
 	}).on("error",(err) => {
-		console.log('UH OH');
 		console.log('Error: ' + err.message);
 	});
 }
