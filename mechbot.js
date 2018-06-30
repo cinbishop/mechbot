@@ -46,4 +46,4 @@ fs.readdir("./commands/", (err, files) => {
 
 client.functions = functions;
 
-client.login(config.tokendev);
+client.login(config.token);
