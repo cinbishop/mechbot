@@ -13,14 +13,17 @@ module.exports = function (client) {
 			});
 
 			resp.on("end",() => {
+				try {
+					data = JSON.parse(data);
 
-				data = JSON.parse(data);
+					Object.keys(data).forEach(function(mech,i) {
+						client.mechdata.set(data[mech]['name'],data[mech]);
+					});
 
-				Object.keys(data).forEach(function(mech,i) {
-					client.mechdata.set(data[mech]['name'],data[mech]);
-				});
-
-				console.log('Mech data loaded.')
+					console.log('Mech data loaded.');
+				} catch (e) {
+					console.log('Smurfy API Is Down!');
+				}
 
 			}).on("error",(err) => {
 				console.log('Error: ' + err.message);
